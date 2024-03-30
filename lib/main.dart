@@ -42,6 +42,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeFavorite(WordPair pair) {
+    favorites.remove(pair);
+    notifyListeners();
+  }
 }
 
 // ...
@@ -150,7 +155,7 @@ class GeneratorPage extends StatelessWidget {
 }
 
 class FavoritesPage extends StatelessWidget {
-  // const FavoritesPage({super.key});
+  const FavoritesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +180,10 @@ class FavoritesPage extends StatelessWidget {
         ),
         for (var pair in favorites)
           ListTile(
-            leading: Icon(Icons.favorite),
+            leading: Icon(Icons.delete),
+            onTap: () {
+              appState.removeFavorite(pair);
+            },
             title: Text(pair.asLowerCase),
           )
       ],
